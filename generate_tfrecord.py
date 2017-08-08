@@ -7,6 +7,8 @@ Usage:
   # Create test data:
   python generate_tfrecord.py --csv_input=data/test_labels.csv  --output_path=test.record
 """
+from __future__ import division, print_function
+
 import os
 import io
 import pandas as pd
