@@ -30,22 +30,41 @@ def class_text_to_int(row_label):
         None
 
 
-def create_tf_example(row):
-    full_path = os.path.join(os.getcwd(), 'images', '{}'.format(row['filename']))
-    with tf.gfile.GFile(full_path, 'rb') as fid:
+def split(df, group):
+    gb = df.groupby(group, sort=True)
+    print(gb.groups)  # random sorting despite the true flag
+    return [gb.get_group(x) for x in gb.groups]
+
+
+def create_tf_example(group, path):
+    for index, row in group.iterrows():
+        if index == 0:
+            filepath = row['filename']
+        else:
+            break
+
+    with tf.gfile.GFile(os.path.join(path, '{}'.format(filepath)), 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
     image = Image.open(encoded_jpg_io)
     width, height = image.size
 
-    filename = row['filename'].encode('utf8')
+    filename = filepath.encode('utf8')
     image_format = b'jpg'
-    xmins = [row['xmin'] / width]
-    xmaxs = [row['xmax'] / width]
-    ymins = [row['ymin'] / height]
-    ymaxs = [row['ymax'] / height]
-    classes_text = [row['class'].encode('utf8')]
-    classes = [class_text_to_int(row['class'])]
+    xmins = []
+    xmaxs = []
+    ymins = []
+    ymaxs = []
+    classes_text = []
+    classes = []
+
+    for index, row in group.iterrows():
+        xmins.append(row['xmin'] / width)
+        xmaxs.append(row['xmax'] / width)
+        ymins.append(row['ymin'] / height)
+        ymaxs.append(row['ymax'] / height)
+        classes_text.append(row['class'].encode('utf8'))
+        classes.append(class_text_to_int(row['class']))
 
     tf_example = tf.train.Example(features=tf.train.Features(feature={
         'image/height': dataset_util.int64_feature(height),
@@ -66,9 +85,10 @@ def create_tf_example(row):
 
 def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
+    path = os.path.join(os.getcwd(), 'images')
     examples = pd.read_csv(FLAGS.csv_input)
     for index, row in examples.iterrows():
-        tf_example = create_tf_example(row)
+        tf_example = create_tf_example(row, path)
         writer.write(tf_example.SerializeToString())
 
     writer.close()
