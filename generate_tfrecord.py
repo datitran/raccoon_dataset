@@ -7,15 +7,19 @@ Usage:
   # Create test data:
   python generate_tfrecord.py --csv_input=data/test_labels.csv  --output_path=test.record
 """
-from __future__ import division, print_function
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 import os
 import io
+import operator
 import pandas as pd
 import tensorflow as tf
 
 from PIL import Image
 from object_detection.utils import dataset_util
+from collections import namedtuple, OrderedDict
 
 flags = tf.app.flags
 flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
@@ -23,6 +27,7 @@ flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
 FLAGS = flags.FLAGS
 
 
+# TO-DO replace this with label map
 def class_text_to_int(row_label):
     if row_label == 'raccoon':
         return 1
@@ -31,25 +36,21 @@ def class_text_to_int(row_label):
 
 
 def split(df, group):
+    data = namedtuple('data', ['filename', 'object'])
     gb = df.groupby(group, sort=True)
-    print(gb.groups)  # random sorting despite the true flag
-    return [gb.get_group(x) for x in gb.groups]
+    # Use ordered dict as gp.groups() creates random order due to dict
+    sorted_group = OrderedDict(sorted([i for i in gb.groups.items()]))
+    return [data(filename, gb.get_group(x)) for filename, x in zip(sorted_group.keys(), sorted_group)]
 
 
 def create_tf_example(group, path):
-    for index, row in group.iterrows():
-        if index == 0:
-            filepath = row['filename']
-        else:
-            break
-
-    with tf.gfile.GFile(os.path.join(path, '{}'.format(filepath)), 'rb') as fid:
+    with tf.gfile.GFile(os.path.join(path, '{}'.format(group.filename)), 'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
     image = Image.open(encoded_jpg_io)
     width, height = image.size
 
-    filename = filepath.encode('utf8')
+    filename = group.filename.encode('utf8')
     image_format = b'jpg'
     xmins = []
     xmaxs = []
@@ -58,7 +59,7 @@ def create_tf_example(group, path):
     classes_text = []
     classes = []
 
-    for index, row in group.iterrows():
+    for index, row in group.object.iterrows():
         xmins.append(row['xmin'] / width)
         xmaxs.append(row['xmax'] / width)
         ymins.append(row['ymin'] / height)
