@@ -13,7 +13,6 @@ from __future__ import absolute_import
 
 import os
 import io
-import operator
 import pandas as pd
 import tensorflow as tf
 
@@ -37,10 +36,8 @@ def class_text_to_int(row_label):
 
 def split(df, group):
     data = namedtuple('data', ['filename', 'object'])
-    gb = df.groupby(group, sort=True)
-    # Use ordered dict as gp.groups() creates random order due to dict
-    sorted_group = OrderedDict(sorted([i for i in gb.groups.items()]))
-    return [data(filename, gb.get_group(x)) for filename, x in zip(sorted_group.keys(), sorted_group)]
+    gb = df.groupby(group)
+    return [data(filename, gb.get_group(x)) for filename, x in zip(gb.groups.keys(), gb.groups)]
 
 
 def create_tf_example(group, path):
@@ -88,11 +85,14 @@ def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
     path = os.path.join(os.getcwd(), 'images')
     examples = pd.read_csv(FLAGS.csv_input)
-    for index, row in examples.iterrows():
-        tf_example = create_tf_example(row, path)
+    grouped = split(examples, 'filename')
+    for group in grouped:
+        tf_example = create_tf_example(group, path)
         writer.write(tf_example.SerializeToString())
 
     writer.close()
+    output_path = os.path.join(os.getcwd(), FLAGS.output_path)
+    print('Successfully created the TFRecords: {}'.format(output_path))
 
 
 if __name__ == '__main__':

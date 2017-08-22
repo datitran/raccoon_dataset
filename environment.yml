@@ -1,4 +1,4 @@
-name: raccoon-dataset
+name: raccoon_dataset
 channels: !!python/tuple
 - menpo
 - defaults
@@ -36,5 +36,5 @@ dependencies:
   - protobuf==3.3.0
   - tensorflow==1.2.1
   - werkzeug==0.12.2
-prefix: /Users/datitran/anaconda/envs/raccoon-dataset
+prefix: /Users/datitran/anaconda/envs/raccoon_dataset
 
