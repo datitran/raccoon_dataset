@@ -31,7 +31,7 @@ def class_text_to_int(row_label):
     if row_label == 'raccoon':
         return 1
     else:
-        None
+        return 0
 
 
 def split(df, group):
