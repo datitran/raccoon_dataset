@@ -1,22 +1,13 @@
-# Raccoon Detector Dataset
+# Object detection utility scripts
 
-This is a dataset that I collected to train my own Raccoon detector with [TensorFlow's Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection). Images are from Google and Pixabay. In total, there are 200 images (160 are used for training and 40 for validation).
+This repo contains a few Python scripts which may be useful for those trying to create the necessary prerequisite files to train an object detection model, either through the [TensorFlow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) or by using [YOLOv3](https://pjreddie.com/darknet/yolo/).
 
-## Getting Started
 
-##### Folder Structure:
-```
-+ annotations: contains the xml files in PASCAL VOC format
-+ data: contains the input file for the TF object detection API and the label files (csv)
-+ images: contains the image data in jpg format
-+ training: contains the pipeline configuration file, frozen model and labelmap
-- a few handy scripts: generate_tfrecord.py is used to generate the input files
-for the TF API and xml_to_csv.py is used to convert the xml files into one csv
-- a few jupyter notebooks: draw boxes is used to plot some of the data and
-split labels is used to split the full labels into train and test labels
-```
+* **generate_csv.py** reads the contents of image annotations stored in XML files, created with [labelImg](https://github.com/tzutalin/labelImg), and generates a single CSV file.
+* **generate_pbtxt.py** reads the previously generated CSV file (or any CSV file that has a column named _"class"_) or a text file containing a single class name per line and no header, and generates a label map, one of the files needed to train a detection model using [TensorFlow's Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection).
+* **generate_tfrecord.py** reads the previously generated CSV and label map files, as well as all the images from a given directory, and generates a TFRecord file, which can then be used to train an object detection model with TensorFlow. The resulting TFRecord file is about the same size of the all the original images that were included in it.
+* **generate_yolo_txt.py** reads a CSV file and generates one .txt file for each image mentioned in the CSV file, whith the same name of the image file. These .txt files contain the object annotations for that image, in a format which [darknet](https://pjreddie.com/darknet/yolo/) uses to train its models.
 
 ## Copyright
 
-See [LICENSE](LICENSE) for details.
-Copyright (c) 2017 [Dat Tran](http://www.dat-tran.com/).
+Licenses are so complicated. This work began as a fork of [Dat Tran's](http://www.dat-tran.com/) raccoon dataset repository, but then it became its own thing. Anyway, the license is unchanged and is in the repo.
