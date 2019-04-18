@@ -1,12 +1,3 @@
-"""
-Usage:
-  # From tensorflow/models/
-  # Create train data:
-  python generate_tfrecord.py --csv_input=data/train_labels.csv  --output_path=train.record
-
-  # Create test data:
-  python generate_tfrecord.py --csv_input=data/test_labels.csv  --output_path=test.record
-"""
 from __future__ import division
 from __future__ import print_function
 from __future__ import absolute_import
@@ -15,16 +6,13 @@ import os
 import io
 import pandas as pd
 import tensorflow as tf
+import argparse
 
 from PIL import Image
+from tqdm import tqdm
 from object_detection.utils import dataset_util
 from collections import namedtuple, OrderedDict
 
-flags = tf.app.flags
-flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
-flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
-flags.DEFINE_string('image_dir', '', 'Path to images')
-FLAGS = flags.FLAGS
 
 
 # TO-DO replace this with label map
@@ -110,4 +98,44 @@ def main(_):
 
 
 if __name__ == '__main__':
-    tf.app.run()
+    parser = argparse.ArgumentParser(
+        description=
+        'Create a TFRecord file for use with the TensorFlow Object Detection API.',
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument(
+        'csv_input',
+        metavar='csv_input',
+        type=str,
+        help='Path to a pbtxt file containing class ids and display names')
+    parser.add_argument(
+        'pbtxt_input',
+        metavar='pbtxt_input',
+        type=str,
+        help='Path to the CSV input')
+    parser.add_argument(
+        'image_dir',
+        metavar='image_dir',
+        type=str,
+        help='Path to the directory containing all images')
+    parser.add_argument(
+        'output_path',
+        metavar='output_path',
+        type=str,
+        help='Path to output TFRecord')
+
+    args = parser.parse_args()
+
+    class_dict = class_dict_from_pbtxt(args.pbtxt_input)
+
+    writer = tf.python_io.TFRecordWriter(args.output_path)
+    path = os.path.join(args.image_dir)
+    examples = pd.read_csv(args.csv_input)
+    grouped = __split(examples, 'filename')
+
+    for group in tqdm(grouped, desc='groups'):
+        tf_example = create_tf_example(group, path, class_dict)
+        writer.write(tf_example.SerializeToString())
+
+    writer.close()
+    output_path = os.path.join(os.getcwd(), args.output_path)
+    print('Successfully created the TFRecords: {}'.format(output_path))
