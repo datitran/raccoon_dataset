@@ -2,6 +2,9 @@
 
 This repo contains a few Python scripts which may be useful for those trying to create the necessary prerequisite files to train an object detection model, either through the [TensorFlow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) or by using [YOLOv3](https://pjreddie.com/darknet/yolo/).
 
+Take a look inside the examples folder to have an idea of the types of files and contents that tese scripts expect as input/generate as output.
+
+## Scripts
 
 * **generate_csv.py** reads the contents of image annotations stored in XML files, created with [labelImg](https://github.com/tzutalin/labelImg), and generates a single CSV file.
 * **generate_pbtxt.py** reads the previously generated CSV file (or any CSV file that has a column named _"class"_) or a text file containing a single class name per line and no header, and generates a label map, one of the files needed to train a detection model using [TensorFlow's Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection).
