@@ -1,4 +1,5 @@
 import pandas as pd
+import argparse
 
 
 def pbtxt_from_classlist(l, pbtxt_path):
@@ -53,4 +54,8 @@ if __name__ == "__main__":
         help='Path where the .pbtxt output will be created')
 
     args = parser.parse_args()
-    xml_to_csv(args.xml_dir, args.output_file)
+
+    if args.input_type == 'csv':
+        pbtxt_from_csv(args.input_file, args.output_file)
+    elif args.input_type == 'txt':
+        pbtxt_from_csv(args.input_file, args.output_file)
