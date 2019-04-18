@@ -58,10 +58,23 @@ def create_tf_example(group, path):
     classes = []
 
     for index, row in group.object.iterrows():
-        xmins.append(row['xmin'] / width)
-        xmaxs.append(row['xmax'] / width)
-        ymins.append(row['ymin'] / height)
-        ymaxs.append(row['ymax'] / height)
+        if set(['xmin_rel', 'xmax_rel', 'ymin_rel', 'ymax_rel']).issubset(
+                set(row.index)):
+            xmin = row['xmin_rel']
+            xmax = row['xmax_rel']
+            ymin = row['ymin_rel']
+            ymax = row['ymax_rel']
+
+        elif set(['xmin', 'xmax', 'ymin', 'ymax']).issubset(set(row.index)):
+            xmin = row['xmin'] / width
+            xmax = row['xmax'] / width
+            ymin = row['ymin'] / height
+            ymax = row['ymax'] / height
+
+        xmins.append(xmin)
+        xmaxs.append(xmax)
+        ymins.append(ymin)
+        ymaxs.append(ymax)
         classes_text.append(row['class'].encode('utf8'))
         classes.append(class_text_to_int(row['class']))
 
