@@ -64,7 +64,7 @@ def create_tf_example(group, path):
         ymins.append(ymin)
         ymaxs.append(ymax)
         classes_text.append(row['class'].encode('utf8'))
-        classes.append(class_text_to_int(row['class']))
+        classes.append(class_dict[row['class']])
 
     tf_example = tf.train.Example(features=tf.train.Features(feature={
         'image/height': dataset_util.int64_feature(height),
@@ -83,18 +83,27 @@ def create_tf_example(group, path):
     return tf_example
 
 
-def main(_):
-    writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
-    path = os.path.join(FLAGS.image_dir)
-    examples = pd.read_csv(FLAGS.csv_input)
-    grouped = split(examples, 'filename')
-    for group in grouped:
-        tf_example = create_tf_example(group, path)
-        writer.write(tf_example.SerializeToString())
+def class_dict_from_pbtxt(pbtxt_path):
+    # open file, strip \n, trim lines and keep only
+    # lines beginning with id or display_name
+    data = [
+        l.rstrip('\n').strip() for l in open(pbtxt_path, 'r', encoding='utf-8-sig')
+        if 'id:' in l or 'display_name:'
+    ]
+    ids = [int(l.replace('id:', '')) for l in data if l.startswith('id')]
+    names = [
+        l.replace('display_name:', '').replace('"', '').strip() for l in data
+        if l.startswith('display_name')
+    ]
 
-    writer.close()
-    output_path = os.path.join(os.getcwd(), FLAGS.output_path)
-    print('Successfully created the TFRecords: {}'.format(output_path))
+    print(data)
+
+    # join ids and display_names into a single dictionary
+    class_dict = {}
+    for i in range(len(ids)):
+        class_dict[names[i]] = ids[i]
+
+    return class_dict
 
 
 if __name__ == '__main__':
