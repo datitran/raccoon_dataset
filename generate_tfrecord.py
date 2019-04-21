@@ -96,7 +96,8 @@ def class_dict_from_pbtxt(pbtxt_path):
     # open file, strip \n, trim lines and keep only
     # lines beginning with id or display_name
     data = [
-        l.rstrip('\n').strip() for l in open(pbtxt_path, 'r', encoding='utf-8-sig')
+        l.rstrip('\n').strip()
+        for l in open(pbtxt_path, 'r', encoding='utf-8-sig')
         if 'id:' in l or 'display_name:'
     ]
     ids = [int(l.replace('id:', '')) for l in data if l.startswith('id')]
@@ -124,12 +125,12 @@ if __name__ == '__main__':
         'csv_input',
         metavar='csv_input',
         type=str,
-        help='Path to a pbtxt file containing class ids and display names')
+        help='Path to the CSV input')
     parser.add_argument(
         'pbtxt_input',
         metavar='pbtxt_input',
         type=str,
-        help='Path to the CSV input')
+        help='Path to a pbtxt file containing class ids and display names')
     parser.add_argument(
         'image_dir',
         metavar='image_dir',
