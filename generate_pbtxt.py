@@ -58,4 +58,4 @@ if __name__ == "__main__":
     if args.input_type == 'csv':
         pbtxt_from_csv(args.input_file, args.output_file)
     elif args.input_type == 'txt':
-        pbtxt_from_csv(args.input_file, args.output_file)
+        pbtxt_from_txt(args.input_file, args.output_file)
