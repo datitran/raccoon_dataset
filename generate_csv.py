@@ -1,9 +1,17 @@
+import json
 import os
 import glob
-import json
 import pandas as pd
 import argparse
 import xml.etree.ElementTree as ET
+
+
+def __list_to_csv(annotations, output_file):
+    column_name = [
+        'filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax'
+    ]
+    xml_df = pd.DataFrame(annotations, columns=column_name)
+    xml_df.to_csv(output_file, index=None)
 
 
 def xml_to_csv(xml_dir, output_file):
@@ -21,14 +29,6 @@ def xml_to_csv(xml_dir, output_file):
             annotations.append(value)
 
     __list_to_csv(annotations, output_file)
-
-
-def __list_to_csv(annotations, output_file):
-    column_name = [
-        'filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax'
-    ]
-    xml_df = pd.DataFrame(annotations, columns=column_name)
-    xml_df.to_csv(output_file, index=None)
 
 
 def json_to_csv(input_json, output_file):
