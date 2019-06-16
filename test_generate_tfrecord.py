@@ -25,7 +25,7 @@ class CSVToTFExampleTest(tf.test.TestCase):
 
         grouped = generate_tfrecord.split(raccoon_df, 'filename')
         for group in grouped:
-            example = generate_tfrecord.create_tf_example(group, self.get_temp_dir())
+            example = generate_tfrecord.create_tf_example(group, self.get_temp_dir(), {"raccoon": 1})
         self._assertProtoEqual(
             example.features.feature['image/height'].int64_list.value, [256])
         self._assertProtoEqual(
@@ -72,7 +72,7 @@ class CSVToTFExampleTest(tf.test.TestCase):
 
         grouped = generate_tfrecord.split(raccoon_df, 'filename')
         for group in grouped:
-            example = generate_tfrecord.create_tf_example(group, self.get_temp_dir())
+            example = generate_tfrecord.create_tf_example(group, self.get_temp_dir(), {"raccoon": 1})
         self._assertProtoEqual(
             example.features.feature['image/height'].int64_list.value, [256])
         self._assertProtoEqual(
@@ -123,7 +123,7 @@ class CSVToTFExampleTest(tf.test.TestCase):
         grouped = generate_tfrecord.split(raccoon_df, 'filename')
         for group in grouped:
             if group.filename == image_file_one:
-                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir())
+                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir(), {"raccoon": 1})
                 self._assertProtoEqual(
                     example.features.feature['image/height'].int64_list.value, [256])
                 self._assertProtoEqual(
@@ -155,7 +155,7 @@ class CSVToTFExampleTest(tf.test.TestCase):
                     example.features.feature['image/object/class/label'].int64_list.value,
                     [1])
             elif group.filename == image_file_two:
-                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir())
+                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir(), {"raccoon": 1})
                 self._assertProtoEqual(
                     example.features.feature['image/height'].int64_list.value, [256])
                 self._assertProtoEqual(
@@ -207,7 +207,7 @@ class CSVToTFExampleTest(tf.test.TestCase):
         grouped = generate_tfrecord.split(raccoon_df, 'filename')
         for group in grouped:
             if group.filename == image_file_one:
-                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir())
+                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir(), {"raccoon": 1})
                 self._assertProtoEqual(
                     example.features.feature['image/height'].int64_list.value, [256])
                 self._assertProtoEqual(
@@ -239,7 +239,7 @@ class CSVToTFExampleTest(tf.test.TestCase):
                     example.features.feature['image/object/class/label'].int64_list.value,
                     [1, 1])
             elif group.filename == image_file_two:
-                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir())
+                example = generate_tfrecord.create_tf_example(group, self.get_temp_dir(), {"raccoon": 1})
                 self._assertProtoEqual(
                     example.features.feature['image/height'].int64_list.value, [256])
                 self._assertProtoEqual(
