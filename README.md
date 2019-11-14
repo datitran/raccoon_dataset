@@ -4,6 +4,8 @@ This repo contains a few Python scripts which may be useful for those trying to 
 
 Take a look inside the examples folder to have an idea of the types of files and contents that these scripts expect as input/generate as output.
 
+![](diagram.svg)
+
 ## Scripts
 
 * **generate_csv.py** reads the contents of image annotations stored in [XML files](examples/raccoon-197.xml), created with [labelImg](https://github.com/tzutalin/labelImg), and generates a single [CSV file](examples/raccoon_labels.csv).
