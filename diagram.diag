@@ -40,4 +40,5 @@ blockdiag {
     csv -> generate_pbtxt.py -> pbtxt -> generate_tfrecord.py -> tfrecord
     csv -> generate_yolo_txt.py -> yolo_txt
     csv -> generate_train_eval.py -> csv
+    csv -> generate_tfrecord.py
 }
