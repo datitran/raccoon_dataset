@@ -64,7 +64,7 @@ if __name__ == "__main__":
                         metavar='type',
                         default='xml',
                         choices=['xml', 'json'],
-                        help='LabelImg XML or VIA JSON')
+                        help='"xml" for LabelImg XML or "json" VIA JSON')
     parser.add_argument(
         'input',
         metavar='input',
