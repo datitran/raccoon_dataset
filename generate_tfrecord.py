@@ -24,7 +24,7 @@ def __split(df, group):
 
 
 def create_tf_example(group, path, class_dict):
-    with tf.gfile.GFile(os.path.join(path, '{}'.format(group.filename)),
+    with tf.io.gfile.GFile(os.path.join(path, '{}'.format(group.filename)),
                         'rb') as fid:
         encoded_jpg = fid.read()
     encoded_jpg_io = io.BytesIO(encoded_jpg)
@@ -146,7 +146,7 @@ if __name__ == '__main__':
 
     class_dict = class_dict_from_pbtxt(args.pbtxt_input)
 
-    writer = tf.python_io.TFRecordWriter(args.output_path)
+    writer = tf.compat.v1.python_io.TFRecordWriter(args.output_path)
     path = os.path.join(args.image_dir)
     examples = pd.read_csv(args.csv_input)
     grouped = __split(examples, 'filename')
