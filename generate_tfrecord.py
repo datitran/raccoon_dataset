@@ -94,21 +94,29 @@ def create_tf_example(group, path, class_dict):
 
 def class_dict_from_pbtxt(pbtxt_path):
     # open file, strip \n, trim lines and keep only
-    # lines beginning with id or display_name
-    data = [
-        l.rstrip('\n').strip()
-        for l in open(pbtxt_path, 'r', encoding='utf-8-sig')
-        if 'id:' in l or 'display_name:'
-    ]
-    ids = [int(l.replace('id:', '')) for l in data if l.startswith('id')]
-    names = [
-        l.replace('display_name:', '').replace('"', '').strip() for l in data
-        if l.startswith('display_name')
-    ]
+   # lines beginning with id or display_name
 
-    print(data)
+   with open(pbtxt_path, 'r', encoding='utf-8-sig') as f:
+      data = f.readlines()
 
-    # join ids and display_names into a single dictionary
+   name_key = None
+   if any('display_name:' in s for s in data):
+      name_key = 'display_name:'
+   elif any('name:' in s for s in data):
+      name_key = 'name:'
+
+   if name_key is None:
+      raise ValueError(
+          "label map does not have class names, provided by values with the 'display_name' or 'name' keys in the contents of the file"
+      )
+
+   data = [l.rstrip('\n').strip() for l in data if 'id:' in l or name_key in l]
+   
+   ids = [int(l.replace('id:', '')) for l in data if l.startswith('id')]
+   names = [
+       l.replace(name_key, '').replace('"', '').replace("'", '').strip() for l in data if l.startswith(name_key)]
+
+   # join ids and display_names into a single dictionary
     class_dict = {}
     for i in range(len(ids)):
         class_dict[names[i]] = ids[i]
