@@ -53,8 +53,8 @@ def create_tf_example(group, path, class_dict):
       xmaxs.append(xmax)
       ymins.append(ymin)
       ymaxs.append(ymax)
-      classes_text.append(row['class'].encode('utf8'))
-      classes.append(class_dict[row['class']])
+      classes_text.append(str(row['class']).encode('utf8'))
+      classes.append(class_dict[str(row['class'])])
 
    tf_example = tf.train.Example(features=tf.train.Features(
        feature={
