@@ -6,7 +6,7 @@ def pbtxt_from_classlist(l, pbtxt_path):
    pbtxt_text = ''
 
    for i, c in enumerate(l):
-      pbtxt_text += 'item {\n    id: ' + str(i + 1) + '\n    display_name: "' + c + '"\n}\n\n'
+      pbtxt_text += 'item {\n    id: ' + str(i + 1) + '\n    display_name: "' + str(c) + '"\n}\n\n'
 
    with open(pbtxt_path, "w+") as pbtxt_file:
       pbtxt_file.write(pbtxt_text)
