@@ -2,7 +2,7 @@
 
 This repo contains a few Python scripts which may be useful for those trying to create the necessary prerequisite files to train an object detection model, either by using the [TensorFlow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) or [darknet](https://github.com/alexeyab/darknet).
 
-Take a look inside the examples folder to have an idea of the types of files that these scripts expect as input/generate as output.
+Take a look inside the `examples` directory to have an idea of the types of files that these scripts expect as input/generate as output.
 
 ![](diagram.svg)
 
