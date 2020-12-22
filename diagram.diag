@@ -1,0 +1,44 @@
+blockdiag {
+    orientation=portrait
+    span_width=32
+    span_height=32
+
+    node_width = 95 // default value is 128
+    node_height = 40 // default value is 40
+
+    class dataset[color="#ffcc99",stacked,shape=box]
+    class third_party[color="#ccf2ff",shape=box]
+    class python[color="#ffff80",shape=roundedbox]
+    class message[color="#ffffff",shape=roundedbox]
+
+    group external {
+        label = "External"
+        color = "#ff7777"
+
+        images[class=dataset,label="Image\ndataset"]
+        xml_files[class=dataset,label="XML annotation\nfiles"]
+        labelImg[class=third_party]
+    }
+
+    group my_repo {
+        label = "This Repo"
+        color = "#77ff77"
+
+        generate_csv.py[class=python,height=30,width=110]
+        generate_pbtxt.py[class=python,height=30,width=110]
+        generate_tfrecord.py[class=python,height=30,width=110]
+        generate_yolo_txt.py[class=python,height=30,width=110]
+        generate_train_eval.py[class=python,height=30,width=110]
+
+        csv[class=message,width=80,label="CSV"]
+        pbtxt[class=message,width=80,label="label map"]
+        tfrecord[class=message,width=80,label="TFRecord"]
+        yolo_txt[class=message,width=80,label="YOLO\ntext files",stacked]
+    }
+
+    images -> labelImg -> xml_files -> generate_csv.py -> csv
+    csv -> generate_pbtxt.py -> pbtxt -> generate_tfrecord.py -> tfrecord
+    csv -> generate_yolo_txt.py -> yolo_txt
+    csv -> generate_train_eval.py -> csv
+    csv -> generate_tfrecord.py
+}

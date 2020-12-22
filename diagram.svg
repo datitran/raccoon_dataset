@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg viewBox="0 0 458 650" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc>blockdiag {
+    orientation=portrait
+    span_width=32
+    span_height=32
+
+    node_width = 95 // default value is 128
+    node_height = 40 // default value is 40
+
+    class dataset[color="#ffcc99",stacked,shape=box]
+    class third_party[color="#ccf2ff",shape=box]
+    class python[color="#ffff80",shape=roundedbox]
+    class message[color="#ffffff",shape=roundedbox]
+
+    group external {
+        label = "External"
+        color = "#ff7777"
+
+        images[class=dataset,label="Image\ndataset"]
+        xml_files[class=dataset,label="XML annotation\nfiles"]
+        labelImg[class=third_party]
+    }
+
+    group my_repo {
+        label = "This Repo"
+        color = "#77ff77"
+
+        generate_csv.py[class=python,height=30,width=110]
+        generate_pbtxt.py[class=python,height=30,width=110]
+        generate_tfrecord.py[class=python,height=30,width=110]
+        generate_yolo_txt.py[class=python,height=30,width=110]
+        generate_train_eval.py[class=python,height=30,width=110]
+
+        csv[class=message,width=80,label="CSV"]
+        pbtxt[class=message,width=80,label="label map"]
+        tfrecord[class=message,width=80,label="TFRecord"]
+        yolo_txt[class=message,width=80,label="YOLO\ntext files",stacked]
+    }
+
+    images -&gt; labelImg -&gt; xml_files -&gt; generate_csv.py -&gt; csv
+    csv -&gt; generate_pbtxt.py -&gt; pbtxt -&gt; generate_tfrecord.py -&gt; tfrecord
+    csv -&gt; generate_yolo_txt.py -&gt; yolo_txt
+    csv -&gt; generate_train_eval.py -&gt; csv
+    csv -&gt; generate_tfrecord.py
+}
+</desc>
+  <rect fill="rgb(255,119,119)" height="200" style="filter:url(#filter_blur)" width="118" x="28" y="24" />
+  <rect fill="rgb(119,255,119)" height="386" style="filter:url(#filter_blur)" width="402" x="28" y="240" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="50" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="46" y="42" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="42" y="38" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="50" y="190" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="46" y="186" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="42" y="182" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="96" x="42" y="110" />
+  <path d="M 43 254 L 137 254 A8,8 0 0 1 145 262 L 145 276 A8,8 0 0 1 137 284 L 43 284 A8,8 0 0 1 35 276 L 35 262 A8,8 0 0 1 43 254" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 43 388 L 137 388 A8,8 0 0 1 145 396 L 145 410 A8,8 0 0 1 137 418 L 43 418 A8,8 0 0 1 35 410 L 35 396 A8,8 0 0 1 43 388" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 185 388 L 279 388 A8,8 0 0 1 287 396 L 287 410 A8,8 0 0 1 279 418 L 185 418 A8,8 0 0 1 177 410 L 177 396 A8,8 0 0 1 185 388" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 327 388 L 421 388 A8,8 0 0 1 429 396 L 429 410 A8,8 0 0 1 421 418 L 327 418 A8,8 0 0 1 319 410 L 319 396 A8,8 0 0 1 327 388" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 43 522 L 137 522 A8,8 0 0 1 145 530 L 145 544 A8,8 0 0 1 137 552 L 43 552 A8,8 0 0 1 35 544 L 35 530 A8,8 0 0 1 43 522" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 58 316 L 122 316 A8,8 0 0 1 130 324 L 130 348 A8,8 0 0 1 122 356 L 58 356 A8,8 0 0 1 50 348 L 50 324 A8,8 0 0 1 58 316" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 58 450 L 122 450 A8,8 0 0 1 130 458 L 130 482 A8,8 0 0 1 122 490 L 58 490 A8,8 0 0 1 50 482 L 50 458 A8,8 0 0 1 58 450" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 58 584 L 122 584 A8,8 0 0 1 130 592 L 130 616 A8,8 0 0 1 122 624 L 58 624 A8,8 0 0 1 50 616 L 50 592 A8,8 0 0 1 58 584" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 208 458 L 272 458 A8,8 0 0 1 280 466 L 280 490 A8,8 0 0 1 272 498 L 208 498 A8,8 0 0 1 200 490 L 200 466 A8,8 0 0 1 208 458" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 204 454 L 268 454 A8,8 0 0 1 276 462 L 276 486 A8,8 0 0 1 268 494 L 204 494 A8,8 0 0 1 196 486 L 196 462 A8,8 0 0 1 204 454" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 200 450 L 264 450 A8,8 0 0 1 272 458 L 272 482 A8,8 0 0 1 264 490 L 200 490 A8,8 0 0 1 192 482 L 192 458 A8,8 0 0 1 200 450" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(255,204,153)" height="40" stroke="rgb(0,0,0)" width="96" x="47" y="40" />
+  <rect fill="rgb(255,204,153)" height="40" stroke="rgb(0,0,0)" width="96" x="43" y="36" />
+  <rect fill="rgb(255,204,153)" height="40" stroke="rgb(0,0,0)" width="96" x="39" y="32" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="28" x="87.0" y="52">Image</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="31" x="87.5" y="64">dataset</text>
+  <rect fill="rgb(255,204,153)" height="40" stroke="rgb(0,0,0)" width="96" x="47" y="184" />
+  <rect fill="rgb(255,204,153)" height="40" stroke="rgb(0,0,0)" width="96" x="43" y="180" />
+  <rect fill="rgb(255,204,153)" height="40" stroke="rgb(0,0,0)" width="96" x="39" y="176" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="74" x="87.0" y="195">XML annotation</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="19" x="87.5" y="207">files</text>
+  <rect fill="rgb(204,242,255)" height="40" stroke="rgb(0,0,0)" width="96" x="39" y="104" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="40" x="87.0" y="130">labelImg</text>
+  <path d="M 40 248 L 134 248 A8,8 0 0 1 142 256 L 142 270 A8,8 0 0 1 134 278 L 40 278 A8,8 0 0 1 32 270 L 32 256 A8,8 0 0 1 40 248" fill="rgb(255,255,128)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="71" x="87.5" y="269">generate_csv.py</text>
+  <path d="M 40 382 L 134 382 A8,8 0 0 1 142 390 L 142 404 A8,8 0 0 1 134 412 L 40 412 A8,8 0 0 1 32 404 L 32 390 A8,8 0 0 1 40 382" fill="rgb(255,255,128)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="80" x="87.0" y="403">generate_pbtxt.py</text>
+  <path d="M 182 382 L 276 382 A8,8 0 0 1 284 390 L 284 404 A8,8 0 0 1 276 412 L 182 412 A8,8 0 0 1 174 404 L 174 390 A8,8 0 0 1 182 382" fill="rgb(255,255,128)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="94" x="229.0" y="403">generate_yolo_txt.py</text>
+  <path d="M 324 382 L 418 382 A8,8 0 0 1 426 390 L 426 404 A8,8 0 0 1 418 412 L 324 412 A8,8 0 0 1 316 404 L 316 390 A8,8 0 0 1 324 382" fill="rgb(255,255,128)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="101" x="371.5" y="403">generate_train_eval.py</text>
+  <path d="M 40 516 L 134 516 A8,8 0 0 1 142 524 L 142 538 A8,8 0 0 1 134 546 L 40 546 A8,8 0 0 1 32 538 L 32 524 A8,8 0 0 1 40 516" fill="rgb(255,255,128)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="92" x="87.0" y="537">generate_tfrecord.py</text>
+  <path d="M 55 310 L 119 310 A8,8 0 0 1 127 318 L 127 342 A8,8 0 0 1 119 350 L 55 350 A8,8 0 0 1 47 342 L 47 318 A8,8 0 0 1 55 310" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="22" x="87.0" y="335">CSV</text>
+  <path d="M 55 444 L 119 444 A8,8 0 0 1 127 452 L 127 476 A8,8 0 0 1 119 484 L 55 484 A8,8 0 0 1 47 476 L 47 452 A8,8 0 0 1 55 444" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="87.0" y="470">label map</text>
+  <path d="M 55 578 L 119 578 A8,8 0 0 1 127 586 L 127 610 A8,8 0 0 1 119 618 L 55 618 A8,8 0 0 1 47 610 L 47 586 A8,8 0 0 1 55 578" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="46" x="87.0" y="603">TFRecord</text>
+  <path d="M 205 452 L 269 452 A8,8 0 0 1 277 460 L 277 484 A8,8 0 0 1 269 492 L 205 492 A8,8 0 0 1 197 484 L 197 460 A8,8 0 0 1 205 452" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <path d="M 201 448 L 265 448 A8,8 0 0 1 273 456 L 273 480 A8,8 0 0 1 265 488 L 201 488 A8,8 0 0 1 193 480 L 193 456 A8,8 0 0 1 201 448" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <path d="M 197 444 L 261 444 A8,8 0 0 1 269 452 L 269 476 A8,8 0 0 1 261 484 L 197 484 A8,8 0 0 1 189 476 L 189 452 A8,8 0 0 1 197 444" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="31" x="229.5" y="463">YOLO</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="39" x="229.5" y="475">text files</text>
+  <path d="M 87 80 L 87 96" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,103 83,96 91,96 87,103" stroke="rgb(0,0,0)" />
+  <path d="M 87 224 L 87 240" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,247 83,240 91,240 87,247" stroke="rgb(0,0,0)" />
+  <path d="M 87 144 L 87 168" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,175 83,168 91,168 87,175" stroke="rgb(0,0,0)" />
+  <path d="M 87 278 L 87 302" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,309 83,302 91,302 87,309" stroke="rgb(0,0,0)" />
+  <path d="M 87 412 L 87 436" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,443 83,436 91,436 87,443" stroke="rgb(0,0,0)" />
+  <path d="M 87 546 L 87 570" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,577 83,570 91,570 87,577" stroke="rgb(0,0,0)" />
+  <path d="M 229 412 L 229 436" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="229,443 225,436 233,436 229,443" stroke="rgb(0,0,0)" />
+  <path d="M 426 397 L 434 397" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 434 397 L 434 298" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 298 L 434 298" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 298 L 87 302" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,309 83,302 91,302 87,309" stroke="rgb(0,0,0)" />
+  <path d="M 87 350 L 87 374" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,381 83,374 91,374 87,381" stroke="rgb(0,0,0)" />
+  <path d="M 87 350 L 87 366" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 366 L 229 366" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 229 366 L 229 374" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="229,381 225,374 233,374 229,381" stroke="rgb(0,0,0)" />
+  <path d="M 87 350 L 87 366" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 366 L 371 366" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 371 366 L 371 374" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="371,381 367,374 375,374 371,381" stroke="rgb(0,0,0)" />
+  <path d="M 87 350 L 87 366" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 366 L 158 366" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 158 366 L 158 500" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 500 L 158 500" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 87 500 L 87 508" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,515 83,508 91,508 87,515" stroke="rgb(0,0,0)" />
+  <path d="M 87 484 L 87 508" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="87,515 83,508 91,508 87,515" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="38" x="87.0" y="29">External</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="47" x="229.5" y="246">This Repo</text>
+</svg>
